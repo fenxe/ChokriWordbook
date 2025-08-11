@@ -1,0 +1,93 @@
+kotlin version: 2.2.0
+error message: java.lang.RuntimeException: Exception while generating code for:
+FUN LOCAL_FUNCTION_FOR_LAMBDA name:MainListView$lambda$66$lambda$65$lambda$58$lambda$57$lambda$54$lambda$53 visibility:private modality:FINAL returnType:kotlin.Unit?
+  VALUE_PARAMETER BOUND_VALUE_PARAMETER kind:Regular name:$hideKey index:0 type:androidx.compose.ui.platform.SoftwareKeyboardController?
+  VALUE_PARAMETER BOUND_VALUE_PARAMETER kind:Regular name:$searchQuery$delegate index:1 type:androidx.compose.runtime.MutableState<kotlin.String>
+  BLOCK_BODY
+    SET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:text type:kotlin.Int visibility:public [final,static] declared in android.R.attr' type=kotlin.Unit superQualifierSymbol=android.R.attr origin=EQ
+      value: CALL 'public final fun toInt (<this>: kotlin.String): kotlin.Int [inline] declared in kotlin.text.StringsKt' type=kotlin.Int origin=null
+        ARG <this>: CALL 'private final fun MainListView$lambda$29 ($searchQuery$delegate: androidx.compose.runtime.MutableState<kotlin.String>): kotlin.String declared in open.sesame.wordbook.ui.MainScreenKt' type=kotlin.String origin=GET_LOCAL_PROPERTY
+          ARG $searchQuery$delegate: GET_VAR '$searchQuery$delegate: androidx.compose.runtime.MutableState<kotlin.String> declared in open.sesame.wordbook.ui.MainScreenKt.MainListView$lambda$66$lambda$65$lambda$58$lambda$57$lambda$54$lambda$53' type=androidx.compose.runtime.MutableState<kotlin.String> origin=null
+    COMPOSITE type=kotlin.Unit origin=null
+      BLOCK type=kotlin.Unit? origin=FOLDED_SAFE_CALL
+        WHEN type=kotlin.Unit? origin=FOLDED_SAFE_CALL
+          BRANCH
+            if: COMPOSITE type=kotlin.Boolean origin=null
+              CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                  ARG arg0: GET_VAR '$hideKey: androidx.compose.ui.platform.SoftwareKeyboardController? declared in open.sesame.wordbook.ui.MainScreenKt.MainListView$lambda$66$lambda$65$lambda$58$lambda$57$lambda$54$lambda$53' type=androidx.compose.ui.platform.SoftwareKeyboardController? origin=null
+                  ARG arg1: CONST Null type=kotlin.Nothing? value=null
+            then: CALL 'public abstract fun hide (): kotlin.Unit declared in androidx.compose.ui.platform.SoftwareKeyboardController' type=kotlin.Unit origin=null
+              ARG <this>: GET_VAR '$hideKey: androidx.compose.ui.platform.SoftwareKeyboardController? declared in open.sesame.wordbook.ui.MainScreenKt.MainListView$lambda$66$lambda$65$lambda$58$lambda$57$lambda$54$lambda$53' type=androidx.compose.ui.platform.SoftwareKeyboardController? origin=null
+          BRANCH
+            if: CONST Boolean type=kotlin.Boolean value=true
+            then: CONST Null type=kotlin.Nothing? value=null
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:50)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate$default(FunctionCodegen.kt:43)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethodNode(ClassCodegen.kt:422)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethod(ClassCodegen.kt:439)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generate(ClassCodegen.kt:164)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.generateFile(JvmIrCodegenFactory.kt:419)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.invokeCodegen(JvmIrCodegenFactory.kt:388)
+	at org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler.runCodegen$cli(KotlinToJVMBytecodeCompiler.kt:432)
+	at org.jetbrains.kotlin.cli.pipeline.jvm.JvmBackendPipelinePhase.executePhase(JvmBackendPipelinePhase.kt:95)
+	at org.jetbrains.kotlin.cli.pipeline.jvm.JvmBackendPipelinePhase.executePhase(JvmBackendPipelinePhase.kt:36)
+	at org.jetbrains.kotlin.cli.pipeline.jvm.JvmBackendPipelinePhase.executePhase(JvmBackendPipelinePhase.kt:29)
+	at org.jetbrains.kotlin.cli.pipeline.PipelinePhase.phaseBody(PipelinePhase.kt:68)
+	at org.jetbrains.kotlin.cli.pipeline.PipelinePhase.phaseBody(PipelinePhase.kt:58)
+	at org.jetbrains.kotlin.config.phaser.NamedCompilerPhase.invoke(CompilerPhase.kt:102)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:22)
+	at org.jetbrains.kotlin.config.phaser.CompilerPhaseKt.invokeToplevel(CompilerPhase.kt:53)
+	at org.jetbrains.kotlin.cli.pipeline.AbstractCliPipeline.runPhasedPipeline(AbstractCliPipeline.kt:109)
+	at org.jetbrains.kotlin.cli.pipeline.AbstractCliPipeline.execute(AbstractCliPipeline.kt:68)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecutePhased(K2JVMCompiler.kt:78)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecutePhased(K2JVMCompiler.kt:44)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:90)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.exec(CLICompiler.kt:352)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunnerBase.runCompiler(IncrementalJvmCompilerRunnerBase.kt:175)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunnerBase.runCompiler(IncrementalJvmCompilerRunnerBase.kt:38)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.doCompile(IncrementalCompilerRunner.kt:504)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileImpl(IncrementalCompilerRunner.kt:421)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally$lambda$10$compile(IncrementalCompilerRunner.kt:254)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally(IncrementalCompilerRunner.kt:272)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:124)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.execIncrementalCompiler(CompileServiceImpl.kt:679)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.access$execIncrementalCompiler(CompileServiceImpl.kt:93)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:1806)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.AssertionError: access of const val: SET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:text type:kotlin.Int visibility:public [final,static] declared in android.R.attr' type=kotlin.Unit superQualifierSymbol=android.R.attr origin=EQ
+  value: CALL 'public final fun toInt (<this>: kotlin.String): kotlin.Int [inline] declared in kotlin.text.StringsKt' type=kotlin.Int origin=null
+    ARG <this>: CALL 'private final fun MainListView$lambda$29 ($searchQuery$delegate: androidx.compose.runtime.MutableState<kotlin.String>): kotlin.String declared in open.sesame.wordbook.ui.MainScreenKt' type=kotlin.String origin=GET_LOCAL_PROPERTY
+      ARG $searchQuery$delegate: GET_VAR '$searchQuery$delegate: androidx.compose.runtime.MutableState<kotlin.String> declared in open.sesame.wordbook.ui.MainScreenKt.MainListView$lambda$66$lambda$65$lambda$58$lambda$57$lambda$54$lambda$53' type=androidx.compose.runtime.MutableState<kotlin.String> origin=null
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitFieldAccess(ExpressionCodegen.kt:807)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitFieldAccess(ExpressionCodegen.kt:135)
+	at org.jetbrains.kotlin.ir.visitors.IrVisitor.visitSetField(IrVisitor.kt:215)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitSetField(ExpressionCodegen.kt:858)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitSetField(ExpressionCodegen.kt:135)
+	at org.jetbrains.kotlin.ir.expressions.IrSetField.accept(IrSetField.kt:21)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:527)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:532)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:135)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:233)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:126)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:47)
+	... 46 more
+
+

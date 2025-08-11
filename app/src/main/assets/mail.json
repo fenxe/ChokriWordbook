@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "subject": "👋Welcome!",
+    "content": "Hi there, I am droid! This is an in-app inbox where future updates or developmental news may arrive",
+    "read": false,
+    "date": ""
+  },
+  {
+    "id": 2,
+    "subject": "🙌Welcome to the wild!",
+    "content": "Oh great Adventurer, you have finally landed! How lucky! May the goddess of winner blesses you more-and-MORE.\r\n     <@admin> This is a test message, you are one of the first person to test this app. It will get better...sooner or later...",
+    "read": false,
+    "date": ""
+  },
+  {
+    "id": 3,
+    "subject": "First changelog",
+    "content": "Cut to the chase!!\r\n   Let the good green-droid ninja show you the first changelog😊. \r\nPrototype 1- 2025July\nApp re-built from scratch using Jetpack Compose. Bare functionality, copied 26 of 752 (26/752) English-Chokri definitions from 2020's Zikkia Project (single A to Z) just for the mockup.\n\nFuture/Feature plan:\nDepending on support, following could be planned:\n1. Better UIs.\n2. Online dictionary database (Downloaded on first-time app usage).\n3. *Updatable dictionary database (New words are delivered straight inside your app without having having to download full app unless theres core changes).\n4. *Display images to some word.\n5. [FUTURE] *Add sound clip for better pronunciation.\n6. [FUTURE] Real time dictionary database edits.\n7. Improve setting page.\n8. [Feature] Save your bookmarks.\n8.1 [Feature] Also add notes to a word that caught your attention.\n8.2 [Feature] Export your notes and bookmarks, import them to your new device.\n9.01 Copy all 752 words from Zikkia into this app.\n9. Community, i-i- guess!?\n\nFeatures marked with * : Needs internet connection, they consume lot of space for app-file. Overtime, resources can build up a several hundred megabytes. You do not need to worry about internet consumption, when you interact for example; Viewed images/photos or played voice clip for a word they will be cached on your device and can be access anytime, or delete them anytime on your storage. Till then, CIAO!\nP.S. Secret key for prototype? Check pac-kage",
+    "read": false,
+    "date": ""
+  },
+  {
+    "id": 4,
+    "subject": "Important!",
+    "content": " \r\nThough not important, do you like the little goblin droid ninja spawning these messages!? L-e-e-e-e-t me know",
+    "read": false,
+    "date": ""
+  },
+  {
+    "id": 5,
+    "subject": "Miscellaneous",
+    "content": "Do checkout my master's repo at 🔗 https://github.com/fenxe \r\n     Finally, thanks again for trying this app out!",
+    "read": false,
+    "date": ""
+  }
+]

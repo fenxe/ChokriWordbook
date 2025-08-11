@@ -1,0 +1,21 @@
+Changelog:
+Prototype 1- 2025July
+App re-built from scratch using Jetpack Compose. Bare functionality, copied 26 of 752 (26/752) English-Chokri definitions from 2020's Zikkia Project (single A to Z) just for the mockup.
+
+Future/Feature plan:
+Depending on support, following could be planned:
+1. Better UIs.
+2. Online dictionary database (Downloaded on first-time app usage).
+3. *Updatable dictionary database (New words are delivered straight inside your app without having having to download full app unless theres core changes).
+4. *Display images to some word.
+5. [FUTURE] *Add sound clip for better pronunciation.
+6. [FUTURE] Real time dictionary database edits.
+7. Improve setting page.
+8. [Feature] Save your bookmarks.
+8.1 [Feature] Also add notes to a word that caught your attention.
+8.2 [Feature] Export your notes and bookmarks, import them to your new device.
+9.01 Copy all 752 words from Zikkia into this app.
+9. Community, i-i- guess!?
+
+Features marked with * : Needs internet connection, they consume lot of space for app-file. Overtime, resources can build up a several hundred megabytes. You do not need to worry about internet consumption, when you interact for example; Viewed images/photos or played voice clip for a word they will be cached on your device and can be access anytime, or delete them anytime on your storage. Till then, CIAO!
+P.S. Secret key for prototype? Check pac-kage
