@@ -18,7 +18,14 @@ $ git checkout barebone
 ```
 
 ------
-
+<div align="center">
+<img src="Screens/1Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="50%" />
+<img src="Screens/2Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />
+<img src="Screens/3Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%"/>
+<img src="Screens/4Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />
+<img src="Screens/5Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />
+<img src="Screens/6Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />
+</div>
 
 ***++Some features during testing++***
 
