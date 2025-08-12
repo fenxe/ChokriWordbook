@@ -33,5 +33,12 @@
     "content": "Do checkout my master's repo at 🔗 https://github.com/fenxe \r\n     Finally, thanks again for trying this app out!",
     "read": false,
     "date": ""
+  },
+  {
+    "id": 6,
+    "subject": "Version 1.1Prototype",
+    "content": "Changes: \r\n1. Added temporary WhatsApp group and Telegram channel, join by clicking on (i) buton on main screen.\r\n2. Moves mailbox icon to left side\r\n3.Disable close page button in detail screen (may remove later)\r\n4.Fixed null number in mail message",
+    "read": false,
+    "date": ""
   }
 ]

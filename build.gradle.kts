@@ -6,3 +6,4 @@ plugins {
     //KSP for room annotation
     id("com.google.devtools.ksp") version "2.2.0-2.0.2" apply false
 }
+

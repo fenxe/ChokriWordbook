@@ -1,19 +1,14 @@
 package open.sesame.wordbook.ui.page.inappmail
 
 import android.widget.Toast
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -33,13 +28,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +40,8 @@ import androidx.compose.ui.window.DialogProperties
 import kotlinx.coroutines.delay
 import open.sesame.wordbook.R.drawable
 import open.sesame.wordbook.R.string
+import open.sesame.wordbook.data.dummy.ListCardHeader
+import open.sesame.wordbook.data.dummy.ProfilePic
 import java.util.concurrent.TimeUnit
 
 /** Mainly for showing in-app mail updates */
@@ -62,7 +56,7 @@ fun MailScreenViewDialog(
         )
     ) {
         MailScreenView(
-            onDismiss = onDismiss, mailViewModel = mailViewModel
+            mailViewModel = mailViewModel
         )
     }
 }
@@ -80,13 +74,13 @@ fun formatTimeAgo(timestampMillis: Long): String {
     return when {
         seconds < 60 -> "$seconds seconds ago"
         minutes < 60 -> {
-            val sec = seconds % 60
+//            val sec = seconds % 60
             "$minutes minutes ago" // $sec seconds ago"
         }
 
         hours < 24 -> {
             val min = minutes % 60
-            val sec = seconds % 60
+//            val sec = seconds % 60
             "$hours hours $min minutes ago" // $sec seconds ago"
         }
 
@@ -97,7 +91,7 @@ fun formatTimeAgo(timestampMillis: Long): String {
 
 @Composable
 fun MailScreenView(
-    mailViewModel: MailViewModel, modifier: Modifier = Modifier, onDismiss: () -> Unit
+    mailViewModel: MailViewModel
 ) {
     val ctx = LocalContext.current
     val mailItems = mailViewModel.mailItem
@@ -128,7 +122,6 @@ fun MailScreenView(
 //        .padding(start = 8.dp, end = 8.dp)
         .background(MaterialTheme.colorScheme.inversePrimary)) {
         MailboxToolbar(
-            modifier = Modifier.fillMaxSize()
         )
 
 
@@ -139,13 +132,18 @@ fun MailScreenView(
         ) {
             itemsIndexed(mailItems) { index, mail ->
 // minor click state adjustment
-                var delayReadLabel by remember { mutableStateOf("Unread") }
+                var delayReadLabel by remember { mutableStateOf("[ Unread ]") }
+                val readLabelTextColor = if (mail.read) Color.Black else Color.White
+                var readLabelBgColor by remember { mutableStateOf(Color.Red) }
+
                 LaunchedEffect(refreshReadLabel, mail.read) {
                     if (mail.read) {
                         delay(100) // Delay ms,500
-                        delayReadLabel = "Finished reading"
+                        delayReadLabel = if (mail.read) " Read ✓✓ " else delayReadLabel
+                        readLabelBgColor = Color.Green
                     } else {
-                        delayReadLabel = "Unread"
+                        delayReadLabel
+                        readLabelBgColor = Color.Red
                     }
                 }
 
@@ -173,8 +171,15 @@ fun MailScreenView(
                             sender = mail.sender,
                             timestamp = mail.timestamp?.let { formatTimeAgo(it) } ?: "Unknown",
                             onClick = { TODO() },
-                            isRead = delayReadLabel,
-                            mailNumber = mail.id.toString(),
+                            isRead = {Text(text =  delayReadLabel,
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = readLabelTextColor,
+                                ),
+                                     modifier = Modifier
+                                         .background(readLabelBgColor))},
+                            mailNumber = (mail.id.toString()),
+                            mNuberBgStyle = MaterialTheme.colorScheme.primary,
+
                         )
                         Text(
                             mail.subject,
@@ -211,7 +216,7 @@ fun MailScreenView(
 
 
 @Composable
-private fun MailboxToolbar(modifier: Modifier = Modifier) {
+private fun MailboxToolbar() {
     val ctx = LocalContext.current
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -246,88 +251,5 @@ private fun MailboxToolbar(modifier: Modifier = Modifier) {
     }
 }
 
-// separated
-@Composable
-fun ProfilePic(
-    @DrawableRes drawableRes: Int, modifier: Modifier = Modifier, onClick: () -> Unit
-) {
-    Box {
-        Image(
-            painter = painterResource(drawableRes),
-            contentDescription = null,
-            modifier = modifier
-                .size(48.dp)
-                .clip(CircleShape)  // to give a circled profile pic
-                .clickable(onClick = onClick) // do something!
-        )
-    }
-}
 
-// to reuse
-@Composable
-fun ListCardHeader(
-    drawableRes: Int,
-    mailNumber: String?,
-    sender: String?,
-    isRead: String?,
-    timestamp: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(modifier = Modifier) {
-        ProfilePic(
-            drawableRes = drawableRes, onClick = onClick
-        )
-        Box(
-//          modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 8.dp, vertical = 8.dp
-                    ), verticalArrangement = Arrangement.Center
-            ) {
-                if (sender != null) {
-                    Text(text = sender, style = MaterialTheme.typography.labelMedium)
-                }
-                Text(
-                    text = timestamp,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.outline
-                )
-            }
-            if (isRead != null) {
-
-                Text(
-                    text = "[ $isRead ]",
-                    modifier = Modifier
-                        .offset(y = (-15).dp, x = 10.dp)
-                        .background(
-                            if (isRead == "Finished reading") Color.Green else Color.Red
-                        )
-                        .align(Alignment.TopEnd),
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = if (isRead == "Finished reading") Color.Black else Color.White,
-                        fontWeight = FontWeight.Light
-                    )
-
-                )
-                Text(
-                    text = mailNumber.toString(),
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .size(24.dp)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape)
-                        .align(Alignment.TopEnd)
-                        .padding(2.dp),
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.W900, color = MaterialTheme.colorScheme.onError
-                    ),
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-    }
-}
 

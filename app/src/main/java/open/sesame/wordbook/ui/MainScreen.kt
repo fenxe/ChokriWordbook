@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -115,7 +114,6 @@ import open.sesame.wordbook.data.WordDetail
 import open.sesame.wordbook.data.dummy.AnimateTextInOut
 import open.sesame.wordbook.data.dummy.ParticleExplosion
 import open.sesame.wordbook.data.dummy.PlainTooltips
-import open.sesame.wordbook.data.dummy.RainbowOutlineTextButton
 import open.sesame.wordbook.data.dummy.SnacksPop
 import open.sesame.wordbook.data.dummy.StoryView
 import open.sesame.wordbook.data.dummy.UnlockDeBugDialog
@@ -130,7 +128,10 @@ fun MainScreen(viewModel: WordBookViewModel, mailViewModel: MailViewModel) {
     var selectedItem by rememberSaveable { mutableStateOf("Wordbook") }
 
     MainListView(
-        viewModel = viewModel, selectedItem = selectedItem, mailViewModel = mailViewModel, onItemSelected = { selectedItem = it })
+        viewModel = viewModel,
+        selectedItem = selectedItem,
+        mailViewModel = mailViewModel,
+        onItemSelected = { selectedItem = it })
 }
 
 @Composable
@@ -139,7 +140,10 @@ fun Float.toDp(): Dp = with(LocalDensity.current) { this@toDp.toDp() }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainListView(
-    viewModel: WordBookViewModel, mailViewModel: MailViewModel = viewModel(), selectedItem: String, onItemSelected: (String) -> Unit
+    viewModel: WordBookViewModel,
+    mailViewModel: MailViewModel = viewModel(),
+    selectedItem: String,
+    onItemSelected: (String) -> Unit
 ) {
     val ctx = LocalContext.current
     // copy json
@@ -154,17 +158,17 @@ fun MainListView(
     }
 
     // Save json mails to internal file whenever mailItems changes (not empty)
-/*    LaunchedEffect(mailItem) {
-        if (mailItem.isNotEmpty()) {
-            withContext(Dispatchers.IO) {
-                writeMailItemsToFile(ctx, jsonFile, mailItem)
+    /*    LaunchedEffect(mailItem) {
+            if (mailItem.isNotEmpty()) {
+                withContext(Dispatchers.IO) {
+                    writeMailItemsToFile(ctx, jsonFile, mailItem)
+                }
             }
-        }
-    }*/
+        }*/
     // Pass unread mails to viewmodel for other screens
-  /*  LaunchedEffect(mailItem) {
-        mailViewModel.updateUnreadStatus(mailItem)
-    }*/
+    /*  LaunchedEffect(mailItem) {
+          mailViewModel.updateUnreadStatus(mailItem)
+      }*/
 
 
     // UI state
@@ -222,6 +226,30 @@ fun MainListView(
 //        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             MediumTopAppBar(
+                navigationIcon = {
+
+                    Box(modifier = Modifier.size(48.dp)) {
+                        PlainTooltips(
+                            plainTooltipText = "Inbox",
+                        ) {
+                            IconButton(onClick = {
+                                showMailWindow = true
+                            }) {
+                                Icon(Icons.Default.Email, contentDescription = "Inbox, WIP")
+                            }
+                            if (hasUnreadMail) {
+                                Box(
+                                    modifier = Modifier
+                                        .padding(top = 12.dp, end = 11.dp)
+                                        .size(6.dp)
+                                        .background(Color.Red, CircleShape)
+                                        .align(Alignment.TopEnd)
+                                )
+                            }
+                        }
+                    }
+
+                },
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -246,59 +274,40 @@ fun MainListView(
                     PlainTooltips(plainTooltipText = stringResource(string.search)) {
 
 
-                      Row {
+                        Row {
+
+
+                            // Real Search icon here xD
+
+                            // Search icon placeholder
                             Box(modifier = Modifier.size(48.dp)) {
-                                                               PlainTooltips(
-                                    plainTooltipText = "Inbox",
+                                // Particle explosion overlay
+                                ParticleExplosion(
+                                    explode = explodeParticles,
+                                    modifier = Modifier.align(Alignment.Center),
+                                    onAnimationEnd = {
+                                        explodeParticles = false
+                                    })
+                                androidx.compose.animation.AnimatedVisibility(
+                                    visible = !isSearching && selectedItem != "Story",
+                                    enter = fadeIn(animationSpec = tween(400, delayMillis = 200)),
+                                    exit = fadeOut() + scaleOut(targetScale = 4f) + slideOutVertically { -100 },
                                 ) {
-                                    IconButton(onClick = {
-                                        showMailWindow = true
-                                    }) {
-                                        Icon(Icons.Default.Email, contentDescription = "Inbox, WIP")
-                                    }
-                                    if (hasUnreadMail) {
-                                        Box(
-                                            modifier = Modifier
-                                                .padding(top = 12.dp, end = 11.dp)
-                                                .size(6.dp)
-                                                .background(Color.Red, CircleShape)
-                                                .align(Alignment.TopEnd)
+
+                                    IconButton(
+                                        onClick = {
+                                            explodeParticles = true
+                                            isSearching = true
+                                        }
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Search,
+                                            contentDescription = stringResource(id = string.search),
+                                            modifier = Modifier.graphicsLayer(rotationZ = 360f)
                                         )
                                     }
                                 }
                             }
-
-                                // Real Search icon here xD
-
-                          // Search icon placeholder
-                          Box(modifier = Modifier.size(48.dp)) {
-                              // Particle explosion overlay
-                              ParticleExplosion(
-                                  explode = explodeParticles,
-                                  modifier = Modifier.align(Alignment.Center),
-                                  onAnimationEnd = {
-                                      explodeParticles = false
-                                  })
-                              androidx.compose.animation.AnimatedVisibility(
-                                  visible = !isSearching && selectedItem != "Story",
-                                  enter = fadeIn(animationSpec = tween(400, delayMillis = 200)),
-                                  exit = fadeOut() + scaleOut(targetScale = 4f) + slideOutVertically { -100 },
-                              ) {
-
-                                  IconButton(
-                                      onClick = {
-                                          explodeParticles = true
-                                          isSearching = true
-                                      }
-                                  ) {
-                                      Icon(
-                                          Icons.Default.Search,
-                                          contentDescription = stringResource(id = string.search),
-                                          modifier = Modifier.graphicsLayer(rotationZ = 360f)
-                                      )
-                                  }
-                              }
-                          }
                         }
 
                     }
@@ -543,13 +552,12 @@ fun BottomSheetSample(
     ModalBottomSheet(
         onDismissRequest = onDismiss, sheetState = sheetState,
         dragHandle = {
-            if (sheetState.currentValue == SheetValue.Expanded){
+            if (sheetState.currentValue == SheetValue.Expanded) {
                 null
             } else {
                 Icon(Icons.Default.KeyboardArrowUp, contentDescription = "null")
             }
-        }
-        ,
+        },
         content = {
             val expanded = sheetState.currentValue == SheetValue.Expanded
             // track if sheet is opened and expanded
@@ -642,7 +650,8 @@ fun BottomSheetSample(
                                             action = Intent.ACTION_SEND
                                             putExtra(Intent.EXTRA_TITLE, "Share word")
                                             putExtra(
-                                                Intent.EXTRA_TEXT, "${detail.english} | ${detail.chokri} " +
+                                                Intent.EXTRA_TEXT,
+                                                "${detail.english} | ${detail.chokri} " +
                                                         "\n-${detail.meaning}\n" +
                                                         "(AP_DEV_TEST_${appName}_${vName}.${vCode}_DATABASE_V_${dbVersion.value})"
                                             )
@@ -729,14 +738,14 @@ fun BottomSheetSample(
                         text = detail.ckExtra, style = MaterialTheme.typography.headlineMedium,
                     )
 
-                    Spacer(Modifier.height(16.dp))
+                    /*Spacer(Modifier.height(16.dp))
                     RainbowOutlineTextButton(
                         onClick = onDismiss, modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .wrapContentHeight()
                     ) {
                         Text("Close Page")
-                    }
+                    }*/
                 }
             }
             UnlockDeBugDialog(

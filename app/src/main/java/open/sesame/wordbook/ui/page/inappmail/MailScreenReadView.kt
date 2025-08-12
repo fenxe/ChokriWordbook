@@ -1,10 +1,8 @@
 package open.sesame.wordbook.ui.page.inappmail
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -47,6 +44,7 @@ import open.sesame.wordbook.R.drawable
 import open.sesame.wordbook.data.dummy.HorizontalLine
 import open.sesame.wordbook.data.dummy.SquigglyDivider
 import androidx.core.net.toUri
+import open.sesame.wordbook.data.dummy.ListCardHeader
 
 @Composable
 fun MailDetailReadViewDialog(
@@ -137,7 +135,7 @@ fun MailDetailReadView(
                     timestamp = mail.date,
                     onClick = { TODO() },
                     isRead = null,// if (mail.read) null else null,   // Pass nothing to do nothing
-                    mailNumber = null
+                    mailNumber = ""
                 )
                 Text(
                     text = "Received: ${timestamp}\nSent by: ${mail.sender}",
@@ -165,8 +163,6 @@ fun MailDetailReadView(
                         .align(Alignment.CenterHorizontally)
                 )
                 SquigglyDivider(
-                    modifier = Modifier
-                        .fillMaxWidth(0.4f)
                 )
                 ContentText(mail.content, mail.sender)
             }

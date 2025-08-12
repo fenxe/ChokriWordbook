@@ -3,6 +3,7 @@ package open.sesame.wordbook.data.dummy
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseInOut
@@ -19,6 +20,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -45,6 +47,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.DividerDefaults
@@ -64,7 +67,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -100,7 +102,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.TextUnit
@@ -128,8 +129,7 @@ fun SnacksPop(
     Scaffold(
         snackbarHost = {
             ReusableSnackbarHost(snackbarHostState = snackbarHostState)
-        }
-    ) { paddingValues ->
+        }) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
             content(snackbarShower)
         }
@@ -156,9 +156,7 @@ fun showOrHideKeyboard(): () -> Unit {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlainTooltips(
-    modifier: Modifier = Modifier,
-    plainTooltipText: String,
-    content: @Composable () -> Unit
+    modifier: Modifier = Modifier, plainTooltipText: String, content: @Composable () -> Unit
 ) {
     TooltipBox(
         modifier = modifier,
@@ -173,7 +171,7 @@ fun PlainTooltips(
 
 // Squigglies. Just use it anywhere!
 @Composable
-fun SquigglyDivider(modifier: Modifier = Modifier) {
+fun SquigglyDivider() {
     Canvas(
         modifier = Modifier
             .fillMaxWidth()
@@ -210,30 +208,57 @@ fun SpacerToy(size: Draw) {
 // Text with leading icon TiL
 @Composable
 fun TextImageLine(
-    modifier: Modifier = Modifier,
-    i: Int, t: String,
+    i: Int, t: String,  // image
     url: String? = null, // Optional URL to open
     tm: String? = null, // Optional toast message
+    appInvitesOrUrl: String? = null, // if the social has android app
 ) {
     val ctx = LocalContext.current
     val painter = painterResource(id = i) // Convert Int to Painter
+    val pkgManager = ctx.packageManager     // to open apps
+    val telegramPkgs = listOf(
+        "org.telegram.messenger",       // Official Telegram
+        "org.thunderdog.challegram",    // Telegram X
+        "org.telegram.plus",            // Plus Messenger
+        "org.bgram.messenger",          // BGram
+        "tw.nekomimi.nekogramx",        // NekoGram X
+        "org.forkgram.messenger",        // Forkgram
+        "app.nicegram"                // Nicegram
+    )
+    val whatsAppPkgs = listOf("com.whatsapp", "com.whatsapp.w4b")
 
     Row(
-        modifier = Modifier
-            .clickable {
-                when {
-                    url != null -> {
-                        val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-                        ctx.startActivity(intent)
-                    }
-
-                    tm != null -> {
-                        Toast.makeText(ctx, tm, Toast.LENGTH_SHORT)
-                            .show()
+        modifier = Modifier.clickable {
+            val intent = when {
+                //Original app first
+                appInvitesOrUrl in whatsAppPkgs ||
+                        appInvitesOrUrl in telegramPkgs -> {
+                    (whatsAppPkgs + telegramPkgs).firstNotNullOfOrNull {
+                        pkgManager.getLaunchIntentForPackage(it)
                     }
                 }
-            },
-        verticalAlignment = Alignment.CenterVertically
+                //If appInvitesOrUrl is a deep link (not a package name), open it as a URL
+                appInvitesOrUrl?.contains("://") == true -> {
+                    Intent(Intent.ACTION_VIEW, appInvitesOrUrl.toUri())
+                }
+
+                //Or other similar app
+                appInvitesOrUrl != null -> {
+                    pkgManager.getLaunchIntentForPackage(appInvitesOrUrl)
+                }
+                //Otherwise internet link
+                url != null -> {
+                    Intent(Intent.ACTION_VIEW, url.toUri())
+                }
+
+                else -> null
+            }
+            intent?.let {
+                ctx.startActivity(it)
+            } ?: tm?.let {
+                Toast.makeText(ctx, "", Toast.LENGTH_SHORT).show()
+            }
+        }, verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painter,
@@ -286,14 +311,12 @@ fun DraggableTextBox(
     // Glitch animation values
     val glitchOffset1 = remember {
         Animatable(
-            Offset.Zero,
-            Offset.VectorConverter
+            Offset.Zero, Offset.VectorConverter
         )
     }
     val glitchOffset2 = remember {
         Animatable(
-            Offset.Zero,
-            Offset.VectorConverter
+            Offset.Zero, Offset.VectorConverter
         )
     }
 
@@ -301,17 +324,13 @@ fun DraggableTextBox(
         while (true) {
             glitchOffset1.animateTo(
                 Offset(
-                    Random.nextInt(-5, 5).toFloat(),
-                    Random.nextInt(-5, 5).toFloat()
-                ),
-                animationSpec = tween(50)
+                    Random.nextInt(-5, 5).toFloat(), Random.nextInt(-5, 5).toFloat()
+                ), animationSpec = tween(50)
             )
             glitchOffset2.animateTo(
                 Offset(
-                    Random.nextInt(-5, 5).toFloat(),
-                    Random.nextInt(-5, 5).toFloat()
-                ),
-                animationSpec = tween(50)
+                    Random.nextInt(-5, 5).toFloat(), Random.nextInt(-5, 5).toFloat()
+                ), animationSpec = tween(50)
             )
             delay(50)
         }
@@ -327,8 +346,7 @@ fun DraggableTextBox(
                     offsetX = (offsetX + dragAmount.x).coerceIn(-250f, 250f)
                     offsetY = (offsetY + dragAmount.y).coerceIn(-400f, 400f)
                 }
-            }
-    ) {
+            }) {
         // Glitch background layers
         Box(
             modifier = Modifier
@@ -340,8 +358,7 @@ fun DraggableTextBox(
                     scaleX = 1.02f
                 }
                 .border(outlineWidth, Color.Cyan, RoundedCornerShape(cornerRadius))
-                .background(Color.Red.copy(alpha = 0.3f), RoundedCornerShape(cornerRadius))
-        )
+                .background(Color.Red.copy(alpha = 0.3f), RoundedCornerShape(cornerRadius)))
 
         Box(
             modifier = Modifier
@@ -353,8 +370,7 @@ fun DraggableTextBox(
                     scaleY = 1.01f
                 }
                 .border(outlineWidth, Color.Magenta, RoundedCornerShape(cornerRadius))
-                .background(Color.Blue.copy(alpha = 0.3f), RoundedCornerShape(cornerRadius))
-        )
+                .background(Color.Blue.copy(alpha = 0.3f), RoundedCornerShape(cornerRadius)))
 
         // Main text box
         Box(
@@ -372,23 +388,15 @@ fun DraggableTextBox(
     }
 }
 
-// H V
 @Composable
-fun VerticalLine(modifier: Modifier = Modifier) {
-    VerticalDivider(modifier = Modifier, thickness = 1.dp, color = DividerDefaults.color)
-}
-
-@Composable
-fun HorizontalLine(modifier: Modifier = Modifier) {
+fun HorizontalLine() {
     HorizontalDivider(modifier = Modifier, thickness = 1.dp, color = DividerDefaults.color)
 }
 
 // Particle Explosion
 @Composable
 fun ParticleExplosion(
-    explode: Boolean,
-    modifier: Modifier = Modifier,
-    onAnimationEnd: () -> Unit = {}
+    explode: Boolean, modifier: Modifier = Modifier, onAnimationEnd: () -> Unit = {}
 ) {
     val particles = remember {
         List(12) {
@@ -409,8 +417,7 @@ fun ParticleExplosion(
 
                 scope.launch {
                     anim.animateTo(
-                        Offset(dx, dy),
-                        animationSpec = tween(900, easing = FastOutSlowInEasing)
+                        Offset(dx, dy), animationSpec = tween(900, easing = FastOutSlowInEasing)
                     )
                 }
             }
@@ -421,8 +428,7 @@ fun ParticleExplosion(
             particles.forEach { anim ->
                 scope.launch {
                     anim.animateTo(
-                        Offset(0f, 0f),
-                        animationSpec = tween(900, easing = FastOutSlowInEasing)
+                        Offset(0f, 0f), animationSpec = tween(900, easing = FastOutSlowInEasing)
                     )
                 }
             }
@@ -469,7 +475,6 @@ fun ParticleExplosion(
 @Composable
 fun RainbowOutlineTextButton(
     onClick: () -> Unit,
-    enabled: Boolean? = null,
     modifier: Modifier = Modifier,
     borderWidth: Dp = 2.dp,
     cornerRadius: Dp = 12.dp,
@@ -479,13 +484,10 @@ fun RainbowOutlineTextButton(
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "RainbowAnim")
     val animatedOffset by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1000f,
-        animationSpec = infiniteRepeatable(
+        initialValue = 0f, targetValue = 1000f, animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 9000, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
-        ),
-        label = "RainbowOffset"
+        ), label = "RainbowOffset"
     )
 
     Box(
@@ -496,15 +498,19 @@ fun RainbowOutlineTextButton(
             .background(bgColor) // so that we can configure anywhere
     ) {
         Canvas(
-            modifier = Modifier
-                .matchParentSize()
+            modifier = Modifier.matchParentSize()
         ) {
             val strokePx = borderWidth.toPx()
             drawRoundRect(
                 brush = Brush.linearGradient(
                     colors = listOf(
-                        Color.Red, Color.Yellow, Color.Green,
-                        Color.Cyan, Color.Blue, Color.Magenta, Color.Red
+                        Color.Red,
+                        Color.Yellow,
+                        Color.Green,
+                        Color.Cyan,
+                        Color.Blue,
+                        Color.Magenta,
+                        Color.Red
                     ),
                     start = Offset(animatedOffset % size.width, 0f),
                     end = Offset((animatedOffset % size.width) + size.width, size.height)
@@ -549,13 +555,10 @@ fun AnimatedOutlinedTextButtonWithTrail(
 
     val infiniteTransition = rememberInfiniteTransition(label = "trailLoop")
     val progress by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
+        initialValue = 0f, targetValue = 1f, animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 6000, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
-        ),
-        label = "progress"
+        ), label = "progress"
     )
 
     val trailPoints = remember { mutableStateListOf<Offset>() }
@@ -574,8 +577,7 @@ fun AnimatedOutlinedTextButtonWithTrail(
             distance <= widthPx -> Offset(distance, 0f)
             distance <= widthPx + heightPx -> Offset(widthPx, distance - widthPx)
             distance <= 2 * widthPx + heightPx -> Offset(
-                2 * widthPx + heightPx - distance,
-                heightPx
+                2 * widthPx + heightPx - distance, heightPx
             )
 
             else -> Offset(0f, perimeter - distance)
@@ -625,9 +627,7 @@ fun AnimatedOutlinedTextButtonWithTrail(
                 trailPoints.forEachIndexed { index, point ->
                     val alpha = 1f - (index.toFloat() / trailPoints.size)
                     drawCircle(
-                        color = trailColor.copy(alpha = alpha),
-                        radius = 6f,
-                        center = point
+                        color = trailColor.copy(alpha = alpha), radius = 6f, center = point
                     )
                 }
             }
@@ -640,8 +640,6 @@ fun AnimatedOutlinedTextButtonWithTrail(
 fun AnimateTextInOut(
     text: String,
     style: TextStyle,
-    textDecoration: TextDecoration? = null,
-    fontStyle: FontStyle? = null,
     baseTextSize: TextUnit,
     lineHeight: TextUnit,
     stepsLimit: Int = 2,
@@ -653,24 +651,17 @@ fun AnimateTextInOut(
     val maxSteps = (baseTextSize.value + stepsLimit).sp
 
     LaunchedEffect(baseTextSize) {
-        baseSize = baseSize.value
-            .coerceIn(minSteps.value, maxSteps.value)
-            .sp
+        baseSize = baseSize.value.coerceIn(minSteps.value, maxSteps.value).sp
     }
 
     AnimatedContent(
-        targetState = baseTextSize,
-        transitionSpec = {
+        targetState = baseTextSize, transitionSpec = {
             scaleIn(animationSpec = tween(500)).togetherWith(
                 scaleOut(animationSpec = tween(500))
             )
-        }
-    ) { txt ->
+        }) { txt ->
         Text(
-            text = text,
-            style = style,
-            fontSize = txt,
-            lineHeight = lineHeight
+            text = text, style = style, fontSize = txt, lineHeight = lineHeight
         )
     }
 
@@ -700,14 +691,15 @@ fun DatabaseVersionText(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnlockDeBugDialog(
+    modifier: Modifier = Modifier,
     showDialog: Boolean,
     onDismiss: () -> Unit,
     label: @Composable (() -> Unit),
     unlockPhrase: String = "open sesame",
     onUnlock: () -> Unit,
     iconResId: Int = R.drawable.ic_launcher_foreground,
-    modifier: Modifier = Modifier
-) {
+
+    ) {
     var inputText by remember { mutableStateOf("") }
 
     if (showDialog) {
@@ -742,7 +734,8 @@ fun UnlockDeBugDialog(
                     }
 
                     val spiderSize = 98.dp // The spider icon's total size
-                    val threadBelowSpider = 18.dp          // ✅ Thread below spider's legs / make bottom line longer
+                    val threadBelowSpider =
+                        18.dp          // ✅ Thread below spider's legs / make bottom line longer
                     val threadAboveSpider = 20.dp // ✅ Length of the thread above the spider's head
 // If you want the thread to extend below the spider, you can add another variable for that
 
@@ -757,11 +750,13 @@ fun UnlockDeBugDialog(
                                 .width(2.dp) // thickness of the thread
                         ) {
                             drawLine(
-                                color = Color.Gray.copy(alpha = 0.6f),
-                                start = Offset(size.width / 2, 0f),         // Line starts at very top of canvas
-                                end = Offset(size.width / 2, size.height),  // Line ends at bottom of canvas
-                                strokeWidth = 2f,
-                                cap = StrokeCap.Round
+                                color = Color.Gray.copy(alpha = 0.6f), start = Offset(
+                                    size.width / 2, 0f
+                                ),         // Line starts at very top of canvas
+                                end = Offset(
+                                    size.width / 2, size.height
+                                ),  // Line ends at bottom of canvas
+                                strokeWidth = 2f, cap = StrokeCap.Round
                             )
                         }
 
@@ -792,7 +787,8 @@ fun UnlockDeBugDialog(
                     OutlinedTextField(
                         value = inputText,
                         onValueChange = {
-                            inputText = it },
+                            inputText = it
+                        },
                         placeholder = { Text("🔒 Type the magic word...") },
                         singleLine = true,
                         label = label,
@@ -811,7 +807,6 @@ fun UnlockDeBugDialog(
                                 onClick = {
                                     onUnlock()
                                 },
-                                enabled = true,
                             ) {
                                 Text(text = "Unlock", modifier = Modifier.offset(y = 4.dp))
                             }
@@ -831,5 +826,130 @@ fun UnlockDeBugDialog(
         }
     }
 }
+
+// Profile pic circle
+@Composable
+fun ProfilePic(
+    @DrawableRes drawableRes: Int, modifier: Modifier = Modifier, onClick: () -> Unit
+) {
+    Box {
+        Image(
+            painter = painterResource(drawableRes),
+            contentDescription = null,
+            modifier = modifier
+                .size(48.dp)
+                .clip(CircleShape)  // to give a circled profile pic
+                .clickable(onClick = onClick) // do something!
+        )
+    }
+}
+
+
+// List header for mail screen
+@Composable
+fun ListCardHeader(
+    drawableRes: Int,
+    mailNumber: String?,
+    sender: String?,
+    isRead: @Composable (() -> Unit)?,
+    timestamp: String,
+    onClick: () -> Unit,
+    mNuberPaddingVertical: Dp? = null,
+    mNuberPaddingAll: Dp? = null,
+    mNuberBgStyle: Color? = null,
+    size: Dp? = null,
+
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = Modifier) {
+        ProfilePic(
+            drawableRes = drawableRes, onClick = onClick
+        )
+        Box {
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 8.dp, vertical = 8.dp
+                    ), verticalArrangement = Arrangement.Center
+            ) {
+                if (sender != null) {
+                    Text(text = sender, style = MaterialTheme.typography.labelMedium)
+                }
+                Text(
+                    text = timestamp,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.outline
+                )
+            }
+            /*            if (isRead != null) {
+
+                            Text(
+                                text = "[ $isRead ]",
+                                modifier = Modifier
+                                    .offset(y = (-15).dp, x = 10.dp)
+                                    .background(
+                                        if (isRead == "Finished reading") Color.Green else Color.Red
+                                    )
+                                    .align(Alignment.TopEnd),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = if (isRead == "Finished reading") Color.Black else Color.White,
+                                    fontWeight = FontWeight.Light
+                                )
+
+                            )
+
+                        }*/
+            isRead?.let {
+                Box(
+                    modifier = Modifier
+                        .offset(y = (-15).dp, x = 10.dp)
+                        .align(Alignment.TopEnd)
+                )
+                {
+                    it()
+                }
+            }
+            Text(
+                text = mailNumber.toString(),
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+//                    .then(
+//                        if (mNuberPaddingVertical != null)
+//                        Modifier.padding(vertical = mNuberPaddingVertical)
+//                        else Modifier,
+//                    )
+//                    .then(
+//                        if (mNuberPaddingAll !=null)
+//                            Modifier.padding(mNuberPaddingAll)
+//                        else Modifier
+//                    )
+                    .then(
+                        if (mNuberBgStyle !=null)
+                            Modifier.background(mNuberBgStyle, CircleShape)
+                        else Modifier
+                    )
+//                    .then(
+//                        if (size !=null)
+//                            Modifier.size(size)
+//                        else Modifier
+//                    )
+                    .size(24.dp)
+//                    .background(MaterialTheme.colorScheme.primary, CircleShape)
+                    .align(Alignment.TopEnd)
+                    .padding(2.dp)
+                    ,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.W900, color = MaterialTheme.colorScheme.onError
+                ),
+                textAlign = TextAlign.Center
+            )
+
+
+
+        }
+    }
+}
+
 
 

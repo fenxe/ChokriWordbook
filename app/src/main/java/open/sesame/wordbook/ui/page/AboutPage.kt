@@ -148,7 +148,8 @@ fun AppSocialPage(onDismiss: () -> Unit) {
                 TextImageLine(
                     i = R.drawable.telegram,
                     t = stringResource(string.telegram),
-                    tm = stringResource(string.under_construction)
+                    appInvitesOrUrl = "https://t.me/+Y8nHcLFpmgViMzll",
+                    url = "https://t.me/+Y8nHcLFpmgViMzll"
                 )
                 TextImageLine(
                     i = R.drawable.vk,
@@ -158,7 +159,8 @@ fun AppSocialPage(onDismiss: () -> Unit) {
                 TextImageLine(
                     i = R.drawable.whatsapp,
                     t = stringResource(string.whatsapp),
-                    tm = stringResource(string.under_construction)
+                    url = "https://chat.whatsapp.com/GVIq9AYed6LKxrWmIAfPmC?mode=ac_t",
+                    appInvitesOrUrl = "https://chat.whatsapp.com/GVIq9AYed6LKxrWmIAfPmC?mode=ac_t"
                 )
                 TextImageLine(
                     i = R.drawable.youtube,

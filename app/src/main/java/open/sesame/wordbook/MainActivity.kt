@@ -5,13 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
-import open.sesame.wordbook.data.DebugViewModel
-import open.sesame.wordbook.data.DebugViewModelFactory
 import open.sesame.wordbook.data.WordBookViewModel
 import open.sesame.wordbook.data.WordBookViewModelFactory
 import open.sesame.wordbook.ui.MainScreen
-import open.sesame.wordbook.ui.page.inappmail.MailDetailReadView
-import open.sesame.wordbook.ui.page.inappmail.MailScreenView
 import open.sesame.wordbook.ui.page.inappmail.MailViewModel
 import open.sesame.wordbook.ui.page.inappmail.MailViewModelFactory
 import open.sesame.wordbook.ui.theme.ChokriWordbookTheme
@@ -24,8 +20,8 @@ class MainActivity : ComponentActivity() {
         val viewModel = ViewModelProvider(this, factory)[WordBookViewModel::class.java]
 
         //dbug direct testing
-        val factory1 = DebugViewModelFactory(application)
-        val viewModel1 = ViewModelProvider(this, factory1)[DebugViewModel::class.java]
+//        val factory1 = DebugViewModelFactory(application)
+//        val viewModel1 = ViewModelProvider(this, factory1)[DebugViewModel::class.java]
 
         //mail viewmodel
         val factory2 = MailViewModelFactory(application)

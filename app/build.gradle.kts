@@ -19,7 +19,7 @@ android {
         minSdk = 30
         targetSdk = 36
         versionCode = 1
-        versionName = "Prototype"
+        versionName = "Prototype_1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,7 +43,11 @@ android {
     buildFeatures {
         compose = true
     }
-}
+    // fix release build
+//    fun Lint.() {
+//        checkReleaseBuilds; false
+//    }
+//}
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
@@ -80,4 +84,5 @@ dependencies {
     // kotlinx serialization for json
     implementation(libs.kotlinx.serialization.json)
 
+}
 }
