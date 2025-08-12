@@ -27,6 +27,7 @@
 ### Cloning:
 
 🚀 **Clone the Repository**
+
 Compiled from latest Android Studio, you might also need Android Studio Narwhal 2025.1.2 to avoid running into unexpected errors
 
 *To get started, clone the repository using Git:*
