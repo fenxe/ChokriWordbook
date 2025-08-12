@@ -32,7 +32,8 @@ $ git checkout barebone
 | Feature | Description | Android (Tested) |
 | :-----------: | :-----------: | :-----------: |
 | Main app | Full screen interface including search, word page and some junk animation | ✅Android 15 and 16 |
-
+| About page | [Under Construction] Pages that shows social links connected to apps, currently GitHub link is available | ✅No issues on Android 15 and 16 |
+| [Debug page](<img src="Screens/5Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />) | Whole dictionary screen page where you can verify or to correct an incorrect word (Currently limited to read-only mode) | ✅ Rendering correctly Android 15/16 |
 
 
 
