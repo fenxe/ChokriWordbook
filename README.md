@@ -14,6 +14,15 @@
 ### A simple mockup app based on compose to show word and it's equivalent meaning, there maybe lots of caveat here and there.
 > *This is an experiment, however issues or pull request are clearly welcomed and opened as long as possible*
 
+<p align="center">
+  Download from 
+  <a href="https://github.com/fenxe/ChokriWordbook/releases/latest">
+    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" height="20" width="20" alt="GitHub">
+  </a>
+  or checkout the 
+  <a href="https://github.com/fenxe/ChokriWordbook/releases">releases tab</a>
+</p>
+
 ------
 ### Cloning:
 
@@ -27,17 +36,10 @@ $ git clone https://github.com/fenxe/ChokriWordbook.git
 $ cd ChokriWordbook
 $ git checkout barebone
 ```
-<p align="center">
-  Download from 
-  <a href="https://github.com/fenxe/ChokriWordbook/releases/latest">
-    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" height="20" width="20" alt="GitHub">
-  </a>
-  or checkout the 
-  <a href="https://github.com/fenxe/ChokriWordbook/releases">releases tab</a>
-</p>
 
 
 ------
+*(images may vary with the actual app!)*
 <div align="center">
 <img src="Screens/1Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="32%" />
 <img src="Screens/2Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="32%" />
