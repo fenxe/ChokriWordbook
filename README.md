@@ -1,3 +1,15 @@
+<p align="center">
+  <a href="https://github.com/fenxe/ChokriWordbook/releases/latest">
+    <img src="https://img.shields.io/github/v/release/fenxe/ChokriWordbook?label=Release&logo=github">
+  </a>
+  <a href="https://android-arsenal.com/api?level=30">
+    <img src="https://img.shields.io/badge/API-30%2B-green.svg?style=flat&logo=android">
+  </a>
+  <a href="https://android.com/">
+    <img src="https://img.shields.io/badge/Platform-Android-green.svg?logo=android">
+  </a>
+</p>
+
 # 🌞 ChokriWordbook - Dictionary Concept App
 ### A simple mockup app based on compose to show word and it's equivalent meaning, there maybe lots of caveat here and there.
 > *This is an experiment, however issues or pull request are clearly welcomed and opened as long as possible*
@@ -15,6 +27,15 @@ $ git clone https://github.com/fenxe/ChokriWordbook.git
 $ cd ChokriWordbook
 $ git checkout barebone
 ```
+<p align="center">
+  Download from 
+  <a href="https://github.com/fenxe/ChokriWordbook/releases/latest">
+    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" height="20" width="20" alt="GitHub">
+  </a>
+  or checkout the 
+  <a href="https://github.com/fenxe/ChokriWordbook/releases">releases tab</a>
+</p>
+
 
 ------
 <div align="center">
