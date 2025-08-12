@@ -3,10 +3,9 @@
 > *This is an experiment, however issues or pull request are clearly welcomed and opened as long as possible*
 
 ------
-
+### Cloning:
 
 🚀 **Clone the Repository**
-
 Compiled from latest Android Studio, you might also need Android Studio Narwhal 2025.1.2 to avoid running into unexpected errors
 
 *To get started, clone the repository using Git:*
@@ -19,12 +18,12 @@ $ git checkout barebone
 
 ------
 <div align="center">
-<img src="Screens/1Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="50%" />
-<img src="Screens/2Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />
-<img src="Screens/3Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%"/>
-<img src="Screens/4Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />
-<img src="Screens/5Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />
-<img src="Screens/6Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />
+<img src="Screens/1Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="32%" />
+<img src="Screens/2Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="32%" />
+<img src="Screens/3Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="32%"/>
+<img src="Screens/4Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="32%" />
+<img src="Screens/5Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="32%" />
+<img src="Screens/6Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="32%" />
 </div>
 
 ***++Some features during testing++***
@@ -33,7 +32,7 @@ $ git checkout barebone
 | :-----------: | :-----------: | :-----------: |
 | Main app | Full screen interface including search, word page and some junk animation | ✅Android 15 and 16 |
 | About page | [Under Construction] Pages that shows social links connected to apps, currently GitHub link is available | ✅No issues on Android 15 and 16 |
-| [Debug page](<img src="Screens/5Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />) | Whole dictionary screen page where you can verify or to correct an incorrect word (Currently limited to read-only mode) | ✅ Rendering correctly Android 15/16 |
+| [Debug page](<img src="Screens/5Screenshot_2025-08-11-17-46-06-704_open.sesame.wordbook.jpg" width="40%" />) | Whole dictionary screen page where you can verify or to correct an incorrect word (Currently limited to read-only mode, guess the magic word magic 🪄) | ✅ Rendering correctly Android 15/16 |
 
 
 
